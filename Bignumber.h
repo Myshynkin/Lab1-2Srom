@@ -21,6 +21,8 @@ public:Bignumber(string bignumber);
 	friend bool operator <= (const Bignumber& a, const Bignumber& b);
 	friend bool operator >= (const Bignumber& a, const Bignumber& b);
 	friend Bignumber converfull(const Bignumber& a);
+	friend Bignumber dw16_(Bignumber a);
+	friend Bignumber dw4_(Bignumber a);
 	Bignumber& operator=( const Bignumber& b);
 	void incons();
 	Bignumber LongMulOne(int one);

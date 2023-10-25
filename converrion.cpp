@@ -80,8 +80,10 @@ int convertion1(char a)
 char anticonvertion(int a)
 {
     string _16 = "0123456789abcdef";
-    return _16[a];
-
+    if (a < 16) {
+        return _16[a];
+    }
+    else { return a; }
 }
 string conver_2(int a) 
 {
@@ -153,13 +155,108 @@ string conver_2(int a)
 Bignumber converfull(const Bignumber& a)
 {
     string dwoi;
+    Bignumber b = a;
+    b = dw4_(b);
     for (int i=511; i >= 0; i--)
     {
         for (int j = 0; j <4; j++)
         {
-            dwoi.push_back(conver_2(a.number[i])[j]);
+            dwoi.push_back(conver_2(b.number[i])[j]);
         }
     }
     Bignumber A(dwoi);
     return A;
+}
+long long int _16chislo(int a,int b,int c,int d)
+{
+    long long result,a1,b1,c1,d1;
+    a1 = 16 * 16 * 16 * a;
+    b1 = 16* 16 * b;
+    c1 = 16 * c;
+    d1 =  d;
+    result = a1 + b1 + c1 + d1;
+    return result;
+}
+Bignumber dw16_(Bignumber a)
+{
+    int ind = 0,ind2=0,a1=0,a2=0,a3=0,a4=0;
+    bool ucan = 0,nol=0;
+    Bignumber b("0");
+    for (int i = 0;i<512;i++) 
+    {
+        if (ind == 0)
+        {
+            a1 = a.number[i];
+        }
+        else if (ind == 1)
+        {
+            a2 = a.number[i];
+        }
+        else if (ind == 2)
+        {
+            a3 = a.number[i];
+        }
+        else if (ind == 3)
+        {
+            a4 = a.number[i];
+            ucan = 1;
+            ind = 0;
+            nol = 1;
+        }
+        if(ucan == 1)
+        {
+            b.number[ind2] = _16chislo(a4, a3, a2, a1);
+            ind2++;
+            ucan = 0;
+        }
+       
+     
+        if (nol == 0)
+        {
+            ind++;
+        }
+        nol = 0;
+
+    }
+    return b;
+}
+Bignumber dw4_(Bignumber a)
+{
+    Bignumber b("0");
+    int a1=0, a2=0, a3=0, a4=0,timea=0,ind=0,ind2=0;
+    for (int i = 0; i < 512; i++)
+    {
+        timea = a.number[i];
+        a4 = timea / (256 * 16);
+        a3 = (timea - (256 * 16 * a4)) / 256;
+        a2 = ((timea - (256 * 16 * a4) - a3 * 256)) / 16;
+        a1 = ((timea - (256 * 16 * a4) - a3 * 256 - 16 * a2));
+        for (int j = 0; j < 4; j++)
+        {
+            if (ind == 0)
+            {
+                b.number[j + ind2] = a1;
+                ind++;
+            }
+            else if (ind == 1)
+            {
+                b.number[j + ind2] = a2;
+                ind++;
+            }
+            else if (ind == 2)
+            {
+                b.number[j + ind2] = a3;
+                ind++;
+            }
+            else if (ind == 3)
+            {
+                b.number[j + ind2] = a4;
+                ind = 0;
+            }
+            
+        }
+        ind2=ind2+4;
+
+    }
+    return b;
 }

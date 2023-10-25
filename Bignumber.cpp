@@ -38,9 +38,9 @@ Bignumber operator + (const Bignumber& a, const Bignumber& b)
     for (size_t i = 0; i<512; i++ ) 
     {
        m1 = a.number[i] + b.number[i]+c;
-       if (m1 > 15)
+       if (m1 > 65535)
        {
-           dod.number[i] = m1-16;
+           dod.number[i] = m1 - 65536;
            c = 1;
        }
        else
@@ -65,7 +65,7 @@ Bignumber operator - (const Bignumber& a, const Bignumber& b)
         }
         else
         {
-            vid.number[i] = m1 + 16;
+            vid.number[i] = m1 + 65536;
             d = 1;
         }
     }
@@ -73,13 +73,15 @@ Bignumber operator - (const Bignumber& a, const Bignumber& b)
 }
 void Bignumber:: incons()
 {
+    Bignumber a = *this;
+    a = dw4_(a);
     bool n = 0;
     for (size_t j = 0; j < 512; j++)
     {
-        if (number[511 - j] != 0||n!=0)
+        if (a.number[511 - j] != 0||n!=0)
         {
             n = 1;
-            cout << anticonvertion(number[511 - j]);
+            cout << anticonvertion(a.number[511 - j] );
         }
     }
     if (n == 0)
@@ -103,8 +105,8 @@ Bignumber Bignumber:: LongMulOne(int one)
     for (size_t j = 0; j < 512; j++)
     {
         temp = res.number[j] * one + c;
-        res.number[j] = temp & 15;
-        c = temp >> 4;
+        res.number[j] = temp & 65535;
+        c = temp >> 16;
     }
     return res;
 }
@@ -318,8 +320,7 @@ Bignumber operator ^ (const Bignumber& a, const Bignumber& b)
         if (i != 0)
         {
             C = C * C;
-            C.incons();
-            cout << '\n';
+            
         }
 
     }

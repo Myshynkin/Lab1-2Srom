@@ -31,6 +31,7 @@ void Program()
 		_operator = imput(3);
 		b_number = imput (2);
 		Bignumber A(a_number), B(b_number);
+		A = dw16_(A); B = dw16_(B);
 		if (_operator == "+")
 		{
 			C = A + B;
